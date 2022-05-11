@@ -1,0 +1,14 @@
+.Header {
+    width: 100%;
+    background-color: orange;
+    height: 5rem;
+    text-align: center;
+    display: flex;
+}
+
+
+.Title {
+    line-height: 5rem;
+    font-size: 3rem;
+    color:aliceblue;
+}
