@@ -56,3 +56,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #E5E5E5;
 }
+
+.Main {
+    padding: 0 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}

@@ -11,7 +11,8 @@ export interface Content {
 
 export interface ChirpItem {
     user: string,
-    content: Content
+    text_content: string,
+    image_content: {[key: number]: string}
 }
 
 

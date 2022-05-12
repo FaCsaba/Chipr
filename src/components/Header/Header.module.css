@@ -5,9 +5,6 @@
     display: flex;
 }
 
-.HamburgerMenu svg {
-    display: none;
-}
 
 .NavigationButton {
     font-size: 23px;
@@ -18,21 +15,25 @@
     cursor: pointer;
 }
 
+.HamburgerMenu {
+    display: none;
+    margin: auto 20px auto 0;
+}
+
+.HamburgerMenu svg {
+    display:unset;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    color: #21243D;
+}
+
 @media screen and (max-width: 480px) {
-    .NavigationButton {
-        visibility: hidden;
+    .HideWhenSmall {
+        display: none;
     }
-
     .HamburgerMenu {
-        margin: auto 20px auto 0;
-    }
-
-    .HamburgerMenu svg {
-        display:unset;
-        cursor: pointer;
-        width: 30px;
-        height: 30px;
-        color: #21243D;
+        display: unset;
     }
 }
 
@@ -42,5 +43,4 @@ a {
 
 .Primary {
     color: #FF6464;
-    font-weight: 600;
 }

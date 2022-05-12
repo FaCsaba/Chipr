@@ -1,5 +1,5 @@
 import Listing from '../../components/ChirpList/ChirpList';
-import Style from './main.module.css';
+import Style from './Index.module.css';
 import PageName from '../../components/PageName/PageName';
 
 
