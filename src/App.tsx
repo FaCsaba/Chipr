@@ -1,4 +1,3 @@
-import './App.module.css';
 import Routing from './pages/Routing';
 
 import CombinedProvider from './store/CombinedProvider';

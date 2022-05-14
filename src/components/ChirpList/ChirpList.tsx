@@ -1,17 +1,17 @@
-import Todo from "../Chirp/Chirp"
+import Chirp from "../Chirp/Chirp"
 import Style from './ChirpList.module.css'
 import ChirprContext from "../../store/ChirprContext";
 import { useContext } from "react";
 
 
-export default function Listing() {
+export default function ChirpListing() {
     const { chirps, users } = useContext(ChirprContext)
 
     return (<>
     {chirps && users &&
     <>
         <div className={Style.TodoList}>
-            {chirps.map((chirp, i) => {return <Todo key={i} chirp={chirp}/>})}
+            {chirps.map((chirp, i) => {return <Chirp key={i} chirp={chirp}/>})}
         </div>
     </>
     }
