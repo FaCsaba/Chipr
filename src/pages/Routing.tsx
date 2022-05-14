@@ -25,8 +25,8 @@ function Routing() {
                             <Route path='/' element={<MainPage/>} />
                             
                             <Route path='/settings' element={<PrivateRoute><SettingsPage/></PrivateRoute>}/>
-                            <Route path='/user/*' element={<PrivateRoute><ProfilePage/></PrivateRoute>}/>
 
+                            <Route path='/user/*' element={<ProfilePage/>}/>
                             <Route path='/login' element={<LoginPage/>}/>
                             <Route path='/register' element={<RegisterPage/>}/>
                             

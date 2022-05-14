@@ -1,7 +1,7 @@
-import { ChirpItem } from '../components';
+import {ChirpItem} from '../../store/ChirpProvider';
 import Classes from './Chirp.module.css'
 import { useContext } from 'react';
-import ChirprContext from '../../store/ChirprContext';
+import ChirpContext from '../../store/ChirpProvider';
 import { Link } from 'react-router-dom';
 
 interface ChirpProps {
@@ -9,17 +9,17 @@ interface ChirpProps {
 }
 
 export default function Chirp({chirp}: ChirpProps) {
-    const { users } = useContext(ChirprContext)
+    const { users } = useContext(ChirpContext)
 
-
+    const user = users.find(user => {return user.id === chirp.userId})
 
     return (<>
-        {users && users[chirp.user]  &&
+        {users && user &&
             <div className={Classes.Card}>
-                    <img className={Classes.ProfilePicture} src={users[chirp.user].pic} alt='' />
+                    <img className={Classes.ProfilePicture} src={user.pic} alt='' />
                 <div className={Classes.Substance}>
-                    <Link to={'/user/'+chirp.user}>
-                        <p className={Classes.Username}>{users![chirp.user].username}</p>
+                    <Link to={'/user/@'+user.chirpHandle}>
+                        <p className={Classes.Username}>{user.username}</p>
                     </Link>
                     <p className={Classes.Text}>{chirp.textcontent}</p>
                 </div>
