@@ -8,7 +8,7 @@ interface ChirpProps {
     chirp: ChirpItem
 }
 
-export default function Todo({chirp}: ChirpProps) {
+export default function Chirp({chirp}: ChirpProps) {
     const { users } = useContext(ChirprContext)
 
 

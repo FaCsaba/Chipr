@@ -1,7 +1,7 @@
-import { collection, getDocs, getDoc } from "firebase/firestore";
-import React, { createContext, useEffect, useState } from "react";
+
+import React, { createContext,  } from "react";
 import { User, ChirpItem } from '../components/components';
-import { db } from '../firebaseSetup';
+
 
 
 interface UserWithAuth extends User {
@@ -19,13 +19,13 @@ export interface ChirprContextI {
 
 export type Users = {[key: string]: User}
 
-const postsDBRef = collection(db, 'chirps');
+/* const postsDBRef = collection(db, 'chirps'); */
 
 const ChirprContext = createContext<ChirprContextI>({})
 
 export function ChirprProvider({ children }: {children: JSX.Element} ) {
 
-    const [chirps, setChirps] = useState<ChirpItem[]>([]);
+/*     const [chirps, setChirps] = useState<ChirpItem[]>([]);
     const [users, setUsers] = useState<Users>({});
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [loggedInUser, setLoggedInUser] = useState<UserWithAuth>({});
@@ -46,12 +46,12 @@ export function ChirprProvider({ children }: {children: JSX.Element} ) {
     useEffect(() => {
         getChirps()
     }, [])
-    
+     */
 
     return <>
-        <ChirprContext.Provider value={{chirps, users, isLoggedIn, loggedInUser, setLoggedIn, setLoggedInUser}}>
-            {children}
-        </ChirprContext.Provider>
+{/*         <ChirprContext.Provider value={{chirps, users, isLoggedIn, loggedInUser, setLoggedIn, setLoggedInUser}}>
+        </ChirprContext.Provider> */}
+        {children}
     </>
 }
 

@@ -6,6 +6,9 @@
     flex-wrap: wrap-reverse;
 }
 
+.Header > * {
+    margin: auto 20px auto 0;
+}
 
 .NavigationButton {
     font-size: 23px;
