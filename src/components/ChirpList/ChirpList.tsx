@@ -1,11 +1,10 @@
 import Chirp from "../Chirp/Chirp"
 import Style from './ChirpList.module.css'
-import ChirprContext from "../../store/ChirprContext";
-import { useContext } from "react";
+import { useChirps } from "../../store/ChirpProvider";
 
 
 export default function ChirpListing() {
-    const { chirps, users } = useContext(ChirprContext)
+    const { chirps, users } = useChirps()
 
     return (<>
     {chirps && users &&
