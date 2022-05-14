@@ -1,0 +1,18 @@
+.Card {
+    height: 300px;
+}
+
+.Form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px
+}
+
+.Password {
+    font-size: 10px;
+}
+
+.Error {
+    color: red;
+    margin-bottom: 20px;
+}

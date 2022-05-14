@@ -1,8 +1,10 @@
 export interface User {
-    username: string,
-    amountOfChirps: number,
-    pic: string
+    username?: string,
+    amountOfChirps?: number,
+    pic?: string
 }
+
+
 
 export interface Content {
     type: 'text' | 'picture'
@@ -10,9 +12,10 @@ export interface Content {
 }
 
 export interface ChirpItem {
+    id: number,
     user: string,
-    text_content: string,
-    image_content: {[key: number]: string}
+    textcontent: string,
+    imagecontent: {[key: number]: string}
 }
 
 

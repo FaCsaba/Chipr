@@ -1,13 +1,12 @@
 import Classes from './Header.module.css';
 import {GiHamburgerMenu} from 'react-icons/gi';
 import { Link, useLocation } from 'react-router-dom';
-import { useContext } from 'react';
-import ChirprContext from '../../store/ChirprContext';
 import {useState} from 'react';
+import { useAuth } from '../../store/AuthProvider';
 
 
 function Header() { // TODO: after we set up states; only show prompt when logged in; change Link to /user+user_id 
-    const {isLoggedIn} = useContext(ChirprContext);
+    const {currentUser} = useAuth()
     const {pathname} = useLocation();
     const [hideWhenSmall, setHideWhenSmall] = useState(true);
 
@@ -22,7 +21,7 @@ function Header() { // TODO: after we set up states; only show prompt when logge
                 <Link to={'/'} className={Classes.NavigationButton + ' ' + (hideWhenSmall && hideWhenSmallClass)} >
                     <p className={pathname === '/' ? Classes.Primary : ''}>Home</p> 
                 </Link>
-                {isLoggedIn?
+                {currentUser?
                     <>
                         <Link to={'/user'} className={Classes.NavigationButton + ' ' + (hideWhenSmall && hideWhenSmallClass)}>
                             <p className={pathname.startsWith('/user') ? Classes.Primary : ''}>Profile</p>

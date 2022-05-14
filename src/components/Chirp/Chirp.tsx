@@ -14,14 +14,14 @@ export default function Todo({chirp}: ChirpProps) {
 
 
     return (<>
-        {users && users[chirp.user] &&
+        {users && users[chirp.user]  &&
             <div className={Classes.Card}>
                     <img className={Classes.ProfilePicture} src={users[chirp.user].pic} alt='' />
                 <div className={Classes.Substance}>
                     <Link to={'/user/'+chirp.user}>
                         <p className={Classes.Username}>{users![chirp.user].username}</p>
                     </Link>
-                    <p className={Classes.Text}>{chirp.text_content}</p>
+                    <p className={Classes.Text}>{chirp.textcontent}</p>
                 </div>
             </div>
         }

@@ -1,0 +1,28 @@
+.Card {
+    height: 300px;
+}
+
+.Form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px
+}
+
+.Button {
+    background-color: #7b39ed;
+    color: white;
+    font-size: large;
+    border-radius: 8px;
+    cursor: pointer;
+    height: 50px;
+    border: none;
+}
+
+.Password {
+    font-size: 10px;
+}
+
+.Error {
+    color: red;
+    margin-bottom: 20px;
+}

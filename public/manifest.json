@@ -1,6 +1,6 @@
 {
-  "short_name": "TODO App",
-  "name": "TODO App using React",
+  "short_name": "Chirpr",
+  "name": "Chirpr",
   "icons": [
     {
       "src": "favicon.ico",

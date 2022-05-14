@@ -1,6 +1,9 @@
-# Simple TODO
+# Chirpr
+### **Social media one chirp at a time**
+---
 Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-A very creative way to show that I can, in fact, use React
+
+A small portfolio piece for [FaCsaba](https://github.com/FaCsaba)
 
 ## Design
 The design is based on [this](https://www.figma.com/file/gKZoWoleFgP35xvYu83Y2l/Portfolio-UI---Web-%26-Mobile?node-id=138%3A70)

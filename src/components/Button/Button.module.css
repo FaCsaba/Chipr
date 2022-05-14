@@ -1,0 +1,19 @@
+.Primary {
+    background-color: #7b39ed;
+    color: white;
+    font-size: large;
+    border-radius: 8px;
+    cursor: pointer;
+    height: 50px;
+    border: none;
+}
+
+.Secondary {
+    background-color: inherit;
+    border-color: #7b39ed;
+    color: #7b39ed;
+    border-radius: 8px;
+    font-size: large;
+    cursor: pointer;
+    height: 50px;
+}

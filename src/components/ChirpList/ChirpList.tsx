@@ -11,7 +11,7 @@ export default function Listing() {
     {chirps && users &&
     <>
         <div className={Style.TodoList}>
-            {Object.keys(chirps).map(key=>{return <Todo key={key} chirp={chirps[key]}/>})}
+            {chirps.map((chirp, i) => {return <Todo key={i} chirp={chirp}/>})}
         </div>
     </>
     }

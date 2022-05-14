@@ -1,52 +1,55 @@
+import { collection, getDocs, getDoc } from "firebase/firestore";
 import React, { createContext, useEffect, useState } from "react";
 import { User, ChirpItem } from '../components/components';
+import { db } from '../firebaseSetup';
 
-export interface ChirprContextI {
-    loggedInUser?: User
-    chirps?: Chirps
-    users?: Users
-    isLoggedIn?: boolean,
-    loadingChirps: boolean
+
+interface UserWithAuth extends User {
+    auth?: string
 }
 
-export type Chirps = {[key: string]: ChirpItem}
+export interface ChirprContextI {
+    loggedInUser?: UserWithAuth 
+    chirps?: ChirpItem[]
+    users?: Users
+    isLoggedIn?: boolean,
+    setLoggedIn?: React.Dispatch<React.SetStateAction<boolean>>
+    setLoggedInUser?: React.Dispatch<React.SetStateAction<UserWithAuth>>
+}
+
 export type Users = {[key: string]: User}
 
+const postsDBRef = collection(db, 'chirps');
 
-const ChirprContext = createContext<ChirprContextI>({loadingChirps: true})
+const ChirprContext = createContext<ChirprContextI>({})
 
 export function ChirprProvider({ children }: {children: JSX.Element} ) {
-    const [chirps, setChirps] = useState<Chirps>({});
+
+    const [chirps, setChirps] = useState<ChirpItem[]>([]);
     const [users, setUsers] = useState<Users>({});
+    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [loggedInUser, setLoggedInUser] = useState<UserWithAuth>({});
 
-    const isLoggedIn = false
-    
+    const getChirps = () => {
+        getDocs(postsDBRef).then(snap=>{
 
-    // THIS IS NOT SCALABLE!! I am just using serverless to showcase Chirp functionality
-
-    const getUsers = () => {
-        
-        fetch('https://chirpr-758b8-default-rtdb.firebaseio.com/users.json')
-        .then(res => {return res.json()})
-        .then(res => {
-            setUsers(res)
+            let _chirps = (snap.docs.map((doc)=>{return doc.data()}))
+            _chirps = _chirps.map((chirp, id) => {chirp.id = id; return chirp})
+            let usersRef = _chirps.map(chirp => {return chirp.user})
+            _chirps.forEach(chirp=>{setChirps((old => [...old, (chirp as ChirpItem)] as ChirpItem[]))})
+            usersRef.forEach( userRef => { getDoc(userRef).then(snap=>{
+                console.log(snap.data())
+            }) })
         })
     }
 
-    const getChirps = () => {
-        fetch('https://chirpr-758b8-default-rtdb.firebaseio.com/chirps.json')
-            .then(res => {return res.json()})
-            .then(res => setChirps(res))
-    }
-
     useEffect(() => {
-        getChirps();
-        getUsers()
+        getChirps()
     }, [])
     
 
     return <>
-        <ChirprContext.Provider value={{chirps, users, isLoggedIn, loadingChirps: true}}>
+        <ChirprContext.Provider value={{chirps, users, isLoggedIn, loggedInUser, setLoggedIn, setLoggedInUser}}>
             {children}
         </ChirprContext.Provider>
     </>
