@@ -17,3 +17,39 @@
     cursor: pointer;
     height: 50px;
 }
+
+.Create {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: #7b39ed;
+    color: white;
+    font-size: 40px;
+    text-decoration: none;
+    padding: 10px;
+
+    transition-duration: .1s;
+    cursor: pointer;
+}
+
+.Create:focus {
+    border: none;
+}
+
+.Create:active {
+    background-color: inherit;
+    border-style: outset;
+    border-color: #7b39ed;
+    color: #7b39ed;
+    border-radius: 50%;
+}
+
+
+.Active {
+    transform: rotate(45deg);
+}

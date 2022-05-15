@@ -27,9 +27,9 @@ function Header() { // TODO: after we set up states; only show prompt when logge
                 <Link to={'/'} className={Classes.NavigationButton + ' ' + (hideWhenSmall && hideWhenSmallClass)} >
                     <p className={pathname === '/' ? Classes.Primary : ''}>Home</p> 
                 </Link>
-                {currentUser &&
+                {currentUser?.auth &&
                     <>
-                        <Link to={'/user'} className={Classes.NavigationButton + ' ' + (hideWhenSmall && hideWhenSmallClass)}>
+                        <Link to={'/user/@'+currentUser.chirprInfo?.chirpHandle} className={Classes.NavigationButton + ' ' + (hideWhenSmall && hideWhenSmallClass)}>
                             <p className={pathname.startsWith('/user') ? Classes.Primary : ''}>Profile</p>
                         </Link>
                         <Link to={'/settings'} className={Classes.NavigationButton}>
@@ -38,7 +38,7 @@ function Header() { // TODO: after we set up states; only show prompt when logge
                         <Button.Secondary value='Logout' callback={handleLogout}/>
                     </>
                 }
-                {!currentUser &&
+                {!currentUser?.auth &&
                     <>
                         <Link to={'/login'} className={Classes.NavigationButton + ' ' + (hideWhenSmall && hideWhenSmallClass)}>
                             <p className={pathname.startsWith('/login') ? Classes.Primary : ''}>Login</p>

@@ -1,25 +1,36 @@
 {
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
   "short_name": "Chirpr",
   "name": "Chirpr",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src":"img/logo.svg",
+      "sizes": "512x512 192x192 64x64 32x32 24x24 16x16",
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
-      "src": "logo192.png",
+      "src": "img/logo_x192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "maskable"
     },
     {
-      "src": "logo512.png",
+      "src": "img/logo_x512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src":"img/logo.png",
+      "type":"image/png",
+      "sizes": "1024x1024",
+      "purpose":"maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#7b39ed",
+  "background_color": "#ffffff",
+  "description": "A free and open source social media with small messages"
 }

@@ -5,7 +5,7 @@ import Classes from './Spinner.module.css';
 function Spinner() {
   return (
       <div className={Classes.SpinnerContainer}>
-          <CgSpinnerAlt className={Classes.Spinner} color='#7b39ed'/>
+          <CgSpinnerAlt className={Classes.Spinner}/>
       </div>
   )
 }

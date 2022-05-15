@@ -22,6 +22,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	image-rendering: -webkit-optimize-contrast;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -62,4 +63,9 @@ body {
     padding: 0 20px;
     max-width: 500px;
     margin: 0 auto;
+}
+
+.App
+#root {
+	height: 100%;
 }

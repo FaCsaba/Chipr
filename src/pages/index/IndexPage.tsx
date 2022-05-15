@@ -5,6 +5,7 @@ import PageName from '../../components/PageName/PageName';
 
 function MainPage() {
 
+
     return <>
         <div className={Style.Main}>
             <PageName name='Home'/>

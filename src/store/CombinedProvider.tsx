@@ -1,14 +1,17 @@
 import React from 'react'
 import AuthProvider from './AuthProvider'
 import { ChirpProvider } from './ChirpProvider'
+import CreateChirpProvider from './CreateChirpProvider'
 
 function CombinedProvider({children}: {children: JSX.Element}) {
   return (
-    <AuthProvider>
-      <ChirpProvider>
-        {children}
-      </ChirpProvider>
-    </AuthProvider>
+    <ChirpProvider>
+        <AuthProvider>
+            <CreateChirpProvider>
+                    {children}
+            </CreateChirpProvider>
+        </AuthProvider>
+    </ChirpProvider>
   )
 }
 

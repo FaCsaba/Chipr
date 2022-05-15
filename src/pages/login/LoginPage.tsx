@@ -20,7 +20,7 @@ export default function LoginPage() {
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         
         setIsLoading(true)

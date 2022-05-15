@@ -1,6 +1,6 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { collection, DocumentData, documentId, getDocs, query, QueryDocumentSnapshot, SnapshotOptions, Timestamp, where } from 'firebase/firestore';
+import { collection, DocumentData, documentId, getDocs, onSnapshot, orderBy, query, QueryDocumentSnapshot, SnapshotOptions, Timestamp, where } from 'firebase/firestore';
 import { db } from "../firebaseSetup";
 
 export class ChirpUser {
@@ -24,18 +24,19 @@ export class ChirpItem {
 export interface ChirpContextI {
     chirps: ChirpItem[]
     users: ChirpUser[]
+    addChirp: (chirp: ChirpItem) => void
 }
 
 export type Users = {[key: string]: ChirpUser}
 
-const ChirpContext = createContext<ChirpContextI>({chirps: [], users: []})
+const ChirpContext = createContext<ChirpContextI>({chirps: [], users: [], addChirp: ()=>{}})
 
 export function useChirps() {
     return useContext(ChirpContext)
 }
 
 
-const chirpConverter = {
+export const chirpConverter = {
     toFirestore: (chirp: ChirpItem): DocumentData => {
         return {
             user: chirp.userId,
@@ -50,7 +51,7 @@ const chirpConverter = {
     }
 }
 
-const userConverter = {
+export const userConverter = {
     toFirestore: (user: ChirpUser): DocumentData => {
         return {
             amountOfChirps: user.amountOfChirps,
@@ -71,27 +72,32 @@ export function ChirpProvider({ children }: {children: JSX.Element} ) {
     const [chirps, setChirps] = useState<ChirpItem[]>([]);
     const [users, setUsers] = useState<ChirpUser[]>([]);
 
+    function addChirp(chirp: ChirpItem) {
+        setChirps([chirp, ...chirps])
+    }
+
     useEffect(()=> {
-        getDocs(collection(db, 'chirps').withConverter(chirpConverter))
-            .then((value)=>{
+        const unsub = onSnapshot(
+            query(collection(db, "chirps")
+            .withConverter(chirpConverter), orderBy('timestamp', 'desc')), (value) => {
                 const _chirps = value.docs.map((q)=>{return q.data()})
                 setChirps(_chirps)
-                return _chirps.map(_chirp=>{return _chirp.userId})
-            })
-            .then( userIds => {
+                const userIds = _chirps.map(_chirp=>{return _chirp.userId})
                 const q = query(collection(db, 'users').withConverter(userConverter), where(documentId(), 'in', userIds))
                                 
-                return getDocs(q)
+                getDocs(q).then( value => {
+                    const _users = value.docs.map(q=>{return q.data()})
+                    setUsers(_users)
+                })
             })
-            .then( value => {
-                const _users = value.docs.map(q=>{return q.data()})
-                setUsers(_users)
-            }) 
+        
+        return unsub
     }, [])
 
     const value: ChirpContextI = {
         chirps,
-        users
+        users,
+        addChirp
     }
 
     return <>
