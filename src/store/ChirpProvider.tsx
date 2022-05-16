@@ -80,6 +80,7 @@ export function ChirpProvider({ children }: {children: JSX.Element} ) {
         const unsub = onSnapshot(
             query(collection(db, "chirps")
             .withConverter(chirpConverter), orderBy('timestamp', 'desc')), (value) => {
+                console.log(value)
                 const _chirps = value.docs.map((q)=>{return q.data()})
                 setChirps(_chirps)
                 const userIds = _chirps.map(_chirp=>{return _chirp.userId})
