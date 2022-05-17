@@ -1,4 +1,4 @@
-import {ChirpItem} from '../../store/ChirpProvider';
+import { ChirpItem, ChirpUser } from '../../store/ChirpProvider';
 import Classes from './Chirp.module.css'
 import { useContext } from 'react';
 import ChirpContext from '../../store/ChirpProvider';
@@ -12,7 +12,7 @@ interface ChirpProps {
 export default function Chirp({chirp, animationDelay}: ChirpProps) {
     const { users } = useContext(ChirpContext)
 
-    const user = users.find(user => {return user.id === chirp.userId})
+    const user = users?.find((user: ChirpUser | undefined) => {return user?.id === chirp.userId})
 
     return (<>
         {users && user &&

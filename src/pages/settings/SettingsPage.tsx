@@ -1,3 +1,6 @@
+import PageName from '../../components/PageName/PageName';
 export default function SettingsPage() {
-    return <></>
+    return <>
+    <PageName name='Settings'/>
+    </>
 }
