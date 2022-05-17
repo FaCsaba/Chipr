@@ -1,13 +1,9 @@
 import Chirp from '../Chirp/Chirp';
 import Classes from './ChirpList.module.css';
 import { ChirpItem } from '../../store/ChirpProvider';
-import {useEffect} from 'react';
 
 
 export default function ChirpListing({chirps}: {chirps: ChirpItem[] | undefined}) {
-    useEffect(()=>{
-        console.log(chirps?.length)
-    })
 
     return (<>
     {chirps &&
