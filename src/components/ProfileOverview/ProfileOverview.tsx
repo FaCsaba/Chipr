@@ -3,8 +3,10 @@ import { ChirpUser } from '../../store/ChirpProvider';
 import Button from '../Button/Button';
 import {useState} from 'react';
 import ChangeProfile from '../ChangeProfile/ChangeProfile';
+import { useAuth } from '../../store/AuthProvider';
 
 function ProfileOverview({user}: {user: ChirpUser}) {
+    const {currentUser} = useAuth()
     const [isChangingProfile, setIsChangingProfile] = useState<boolean>(false)
 
     return (
@@ -16,12 +18,15 @@ function ProfileOverview({user}: {user: ChirpUser}) {
                 <div style={{display: "flex", width: '100%', flexWrap: 'wrap'}}>
                     <p className={Classes.Username}>{user.username}</p>
                     <p className={Classes.Handle}>{"@"+user.chirpHandle}</p>
-                    <Button.Secondary onClick={()=>setIsChangingProfile(true)} className={Classes.ChangeProfileButton} value='Change profile'/>
+                    {currentUser?.chirprInfo?.id === user.id &&
+                        <Button.Secondary onClick={()=>setIsChangingProfile(true)} className={Classes.ChangeProfileButton} value='Change profile'/>
+                    }
                 </div>
                 <span className={Classes.Blurb}>
-                {user.blurb? 
-                user.blurb:
-                <span style={{color: '#5a4c74'}}>Try adding a blurb!</span>
+                {!user.blurb && currentUser?.chirprInfo?.id === user.id? 
+                    <span style={{color: '#5a4c74'}}>Try adding a blurb!</span>
+                        :
+                    user.blurb
                 }</span>
             </div>
             {isChangingProfile &&
