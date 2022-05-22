@@ -1,6 +1,5 @@
 import Classes from './PictureHolder.module.css';
 import React from 'react';
-import {useEffect, useState} from 'react';
 import { useChirpCreatorUploadImages } from '../ChirpCreator/ChirpCreator';
 
 
@@ -60,7 +59,7 @@ function UploadImgArray() {
             }
             {images.length === 3 ? <>
                 {images[0]('')}
-                <div style={{display: "flex", gap: "4px"}}>
+                <div style={{display: "flex", gap: "4px", justifyContent: 'space-between', width: '100%'}}>
                     <>
                         {images[1]('')}
                         {images[2]('')}

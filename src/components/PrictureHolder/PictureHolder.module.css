@@ -5,6 +5,7 @@
     overflow: hidden;
     justify-content: space-between;
     gap: 4px;
+    max-height: 600px;
 }
 
 

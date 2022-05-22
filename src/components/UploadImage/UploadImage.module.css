@@ -30,6 +30,7 @@
 .ImageContainer {
     width: 100%;
     position: relative;
+    height: 300px;
 }
 
 .ImageNotLoadedYetGray {
@@ -44,6 +45,8 @@
 
 .Image {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .CancelButton {

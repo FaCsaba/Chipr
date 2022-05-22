@@ -36,6 +36,7 @@
     border-radius: 50%;
     color: rgba(128, 128, 128, 1);
     position: relative;
+    object-fit: cover;
 }
 
 .ProfileChangeCameraButton {
