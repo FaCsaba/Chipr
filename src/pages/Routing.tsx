@@ -24,7 +24,7 @@ function Routing() {
                         <Routes>
                             <Route path='/' element={<MainPage/>} />
                             
-                            <Route path='/settings' element={<PrivateRoute><SettingsPage/></PrivateRoute>}/>
+                            <Route path='/settings' element={<SettingsPage/>}/>
 
                             <Route path='/user/*' element={<ProfilePage/>}/>
                             <Route path='/login' element={<LoginPage/>}/>
@@ -34,7 +34,7 @@ function Routing() {
                         </Routes>
                     </div>
                 }
-                {isLoadingCurrentUser && <Spinner/>}
+                {isLoadingCurrentUser && <div style={{position: "absolute", margin: "auto", inset:0, textAlign: "center", width: "150px", height: "150px"}}><Spinner className={Classes.Spinner}/></div>}
             </div>
         </BrowserRouter>
     )

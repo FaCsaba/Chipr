@@ -3,14 +3,21 @@ import { useChirps, ChirpUser, ChirpItem } from '../../store/ChirpProvider';
 import {useState, useEffect} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ChirpListing from '../../components/ChirpList/ChirpList';
+import ProfileOverview from '../../components/ProfileOverview/ProfileOverview';
+import Spinner from '../../components/Spinner/Spinner';
+import { useAuth } from '../../store/AuthProvider';
+import ChirpCreator from '../../components/ChirpCreator/ChirpCreator';
+
 export default function ProfilePage() {
-    const {getUser, users} = useChirps()
-    const [viewedUser, setViewedUser] = useState<ChirpUser | undefined>(undefined)
+    const {currentUser} = useAuth()
+    const {chirps, users} = useChirps()
     const location = useLocation()
     const nav = useNavigate()
-    const [chirps, setChirps] = useState<ChirpItem[] | undefined>(undefined)
 
-    
+    const [viewedUser, setViewedUser] = useState<ChirpUser | undefined>(undefined)
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [chirpsOfUser, setChirpsOfUser] = useState<ChirpItem[] | undefined>(undefined)
+    const [chirpHandle, setChirpHandle] = useState<string | null>(null)
 
     useEffect(()=>{
         function getChirpHandleFromPath() {
@@ -20,23 +27,40 @@ export default function ProfilePage() {
             return chirpHandlePart
         }
 
-        const chirpHandle = getChirpHandleFromPath()
-        getUser(chirpHandle)
-        setViewedUser(users?.find((user: ChirpUser | undefined)=>{return user?.chirpHandle === chirpHandle}))
-    }, [getUser, users, location, nav])
+        setChirpHandle(getChirpHandleFromPath())
 
-    async function getChirps() {
-        setChirps(await viewedUser?.getChirps())
-    }
+        
+    }, [location.pathname, nav])
 
     useEffect(()=>{
-        getChirps()
-    })
+        if (chirpHandle && users) {
+            setViewedUser(users.filter(u=>{return u.chirpHandle === chirpHandle})[0])
+        }
+    }, [chirpHandle, users])
+
+    
+    useEffect(()=>{
+        if (viewedUser) {
+            setChirpsOfUser(chirps?.filter(c=>{return c.userId === viewedUser.id}))
+        }
+        setIsLoading(false)
+    }, [viewedUser, chirps])
+
 
 
 
     return <>
-        <PageName name={viewedUser?.username? viewedUser.username : 'Unknown User'}/>
-        <ChirpListing chirps={chirps}/>
+    {viewedUser? <PageName name="Profile"/>:<PageName name='User does not exist'/>}
+        
+    {viewedUser &&
+        <>
+            <ProfileOverview user={viewedUser} />
+            {viewedUser.id === currentUser?.chirprInfo?.id && <ChirpCreator/>}
+            <ChirpListing chirps={chirpsOfUser}/>
+        </>
+    }
+    {isLoading &&
+        <div><Spinner/></div>
+    }
     </>
 }

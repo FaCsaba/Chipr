@@ -1,6 +1,6 @@
 .Primary {
-    background-color: #7b39ed;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--background-pop);
     font-size: large;
     border-radius: 8px;
     cursor: pointer;
@@ -10,8 +10,8 @@
 
 .Secondary {
     background-color: inherit;
-    border-color: #7b39ed;
-    color: #7b39ed;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
     border-radius: 8px;
     font-size: large;
     cursor: pointer;
@@ -27,8 +27,8 @@
     height: 50px;
     border-radius: 50%;
     border: none;
-    background-color: #7b39ed;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--background-pop);
     font-size: 40px;
     text-decoration: none;
     padding: 10px;
@@ -44,11 +44,17 @@
 .Create:active {
     background-color: inherit;
     border-style: outset;
-    border-color: #7b39ed;
-    color: #7b39ed;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
     border-radius: 50%;
 }
 
+.Picture {
+    color: var(--primary-color);
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
 
 .Active {
     transform: rotate(45deg);

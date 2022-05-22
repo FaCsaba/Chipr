@@ -1,0 +1,22 @@
+.Backdrop {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+
+.Modal {
+    max-width: 600px;
+    padding: 20px;
+    background-color: var(--background-color);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 2;
+}

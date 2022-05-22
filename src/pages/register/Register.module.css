@@ -12,7 +12,8 @@
     font-size: 10px;
 }
 
+
 .Error {
-    color: red;
+    color: var(--error);
     margin-bottom: 20px;
 }

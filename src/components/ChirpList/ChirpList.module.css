@@ -2,3 +2,9 @@
     margin: 0 auto;
 }
 
+.NoChirps {
+    text-align: center;
+    font-size: 30px;
+    color: var(--text-color);
+    margin-top: 20px;
+}

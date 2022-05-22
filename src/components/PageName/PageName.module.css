@@ -2,6 +2,6 @@
     font-weight: 700;
     font-size: 44px;
     max-width: 500px;
-    margin: 0 auto 40px auto;
-    color: #1a202e;
+    margin-bottom: 40px;
+    color: var(--text-color);
 }

@@ -1,10 +1,10 @@
 
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { collection, DocumentData, documentId, getDocs, onSnapshot, orderBy, query, QueryDocumentSnapshot, SnapshotOptions, Timestamp, where } from 'firebase/firestore';
+import { createContext, useContext, useState, useEffect } from "react";
+import { collection, deleteDoc, DocumentData, getDocs, onSnapshot, orderBy, query, QueryDocumentSnapshot, SnapshotOptions, Timestamp, where, doc } from 'firebase/firestore';
 import { db } from "../firebaseSetup";
 
 export class ChirpUser {
-    constructor(public id: string, public amountOfChirps: number, public chirpHandle: string, public chirpIds: string[], public pic: string, public username: string) {}
+    constructor(public id: string, public amountOfChirps: number, public chirpHandle: string, public chirpIds: string[], public pic: string, public username: string, public createdAt: Timestamp, public blurb: string) {}
 
     async getChirps() {
         // getDoc where /chiprs/${id}/user == this.id
@@ -26,12 +26,13 @@ export interface ChirpContextI {
     chirps: ChirpItem[] | undefined
     users: ChirpUser[] | undefined
     addChirp: (chirp: ChirpItem) => void
-    getUser: (chirpHandle: string) => void
+    getUserByChirpHandle?: (chirpHandle: string) => Promise<ChirpUser|undefined>
+    deleteChirp: (chirpId: string) => void
 }
 
 export type Users = {[key: string]: ChirpUser}
 
-const ChirpContext = createContext<ChirpContextI>({chirps: [], users: [], addChirp: ()=>{}, getUser: ()=>{}})
+const ChirpContext = createContext<ChirpContextI>({chirps: [], users: [], addChirp: ()=>{}, deleteChirp: ()=>{}})
 
 export function useChirps() {
     return useContext(ChirpContext)
@@ -65,7 +66,7 @@ export const userConverter = {
     },
     fromFirestore: (snapshot: QueryDocumentSnapshot, options: SnapshotOptions): ChirpUser => {
         const data = snapshot.data(options);
-        return new ChirpUser(snapshot.id, data.amountOfChirps, data.chirpHandle, data.chirps, data.pic, data.username)
+        return new ChirpUser(snapshot.id, data.amountOfChirps, data.chirpHandle, data.chirps, data.pic, data.username, data.createdAt, data.blurb)
     }
 }
 
@@ -108,20 +109,28 @@ export function ChirpProvider({ children }: {children: JSX.Element} ) {
 
     
 
-    function getUserByChirpHandle(chirpHandle: string) {
+    async function getUserByChirpHandle(chirpHandle: string) {
         if (users) {
             const found = users.find((user: ChirpUser | undefined)=>{
                 if (!user) return false
                 return user.chirpHandle === chirpHandle
             })
-            if (found) {return}
+            if (found) {return found}
         }
+
         const q = query(collection(db, 'users').withConverter(userConverter), where('chirpHandle', '==', chirpHandle))
-        getDocs(q).then( value => {
-            const _users = value.docs.map(doc => {return doc.data()})
-            
+        const value = await getDocs(q)
+        const _users = value.docs.map(doc => {return doc.data()})
+        if (_users) {
             addUser(_users[0])
-        })
+        }
+        return users?.filter(u=>{return u.chirpHandle === chirpHandle})[0]
+    }
+
+    function deleteChirp(chirpId: string) {
+        deleteDoc(doc(collection(db, 'chirps'), chirpId))
+            .then(()=>console.log('deleted chirp'))
+            .catch((reason)=> console.log(reason))
     }
 
 
@@ -129,7 +138,8 @@ export function ChirpProvider({ children }: {children: JSX.Element} ) {
         chirps,
         users,
         addChirp,
-        getUser: getUserByChirpHandle
+        getUserByChirpHandle: getUserByChirpHandle,
+        deleteChirp
     }
 
     return <>

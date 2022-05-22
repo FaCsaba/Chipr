@@ -39,7 +39,7 @@ export default function LoginPage() {
                     <InputWithLabel label='Password' type='password' ref={passwordRef} className={Classes.Password} id='password' />
 
                     <Button.Primary type='submit' value='Login'/>
-                    <Button.Secondary type='submit' value='Register' callback={()=>goTo('/register')}  />
+                    <Button.Secondary type='submit' value='Register' onClick={()=>goTo('/register')}  />
                 </form>
             </div>
             <div hidden={!isLoading}>

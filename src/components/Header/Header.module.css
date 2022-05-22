@@ -6,7 +6,7 @@
     flex-wrap: wrap-reverse;
 }
 
-.Header > * {
+.Header>* {
     margin: auto 20px auto 0;
 }
 
@@ -14,14 +14,14 @@
     font-size: 23px;
     font: Heebo;
     font-weight: 500;
-    color: #1a202e;
+    color: var(--text-color);
     margin: auto 20px auto 0;
     cursor: pointer;
 }
 
 .NavigationButton:hover {
-    color: white;
-    background-color: #7b39ed;
+    color: var(--background-pop);
+    background-color: var(--primary-color);
 }
 
 .HamburgerMenu {
@@ -30,17 +30,18 @@
 }
 
 .HamburgerMenu svg {
-    display:unset;
+    display: unset;
     cursor: pointer;
     width: 30px;
     height: 30px;
-    color: #7b39ed;
+    color: var(--primary-color);
 }
 
 @media screen and (max-width: 480px) {
     .HideWhenSmall {
         display: none;
     }
+
     .HamburgerMenu {
         display: unset;
     }
@@ -51,9 +52,9 @@ a {
 }
 
 .Primary {
-    color: #7b39ed;
+    color: var(--primary-color);
 }
 
 .Primary:hover {
-    background-color: white;
+    background-color: var(--background-pop);
 }

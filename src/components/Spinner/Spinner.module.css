@@ -1,12 +1,5 @@
 .Spinner {
-    width: 150px;
-    height: 150px;
-    
-    position: absolute;
-    top: 0px;
-    left: 0px;
-
-    color: #7b39ed;
+    color: var(--primary-color);
 
     animation-name: rotate;
     animation-duration: 2s;
@@ -16,18 +9,20 @@
 
 @keyframes rotate {
     0% {
-        transform: translate(calc(50vh - 50%), calc(50vh - 50%)) rotate(0deg);
+        transform: rotate(0deg);
     }
+
     100% {
-        transform: translate(calc(50vh - 50%), calc(50vh - 50%)) rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
 @-moz-keyframes rotate {
     0% {
-        transform: translate(calc(50vh - 50%), calc(50vh - 50%)) rotate(0deg);
+        transform: rotate(0deg);
     }
+
     100% {
-        transform: translate(calc(50vh - 50%), calc(50vh - 50%)) rotate(360deg);
+        transform: rotate(360deg);
     }
 }

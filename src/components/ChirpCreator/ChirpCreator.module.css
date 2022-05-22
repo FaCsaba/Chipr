@@ -1,46 +1,35 @@
 .Card {
-    background-color: white;
+    background-color: var(--background-pop);
     border-radius: 10px;
-    max-width: 500px;
     min-height: 110px;
-    margin: 20px auto 20px auto ;
+    margin: 20px auto 20px auto;
+    padding: 20px;
+    gap: 20px;
     display: flex;
     animation: floatIn .5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-}
-
-.Username {
-    font-size: 23px;
-    font-weight: 500;
-    color:#21243D;
-    float: left;
-}
-
-.Handle {
-    color: #7b39ed;
-    width: fit-content;
-    height: fit-content;
-    margin: auto 0;
 }
 
 .ProfilePicture {
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    margin: 20px;
 }
 
 .Form {
     width: 100%;
     height: 100%;
+    max-height: 700px;
 }
 
 .Button {
     width: 100px;
     margin-left: auto;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    margin-top: auto;
     float: right;
+}
+
+.Picture {
+    float: right;
+    margin: 5px 10px;
 }
 
 .CreateChirpInput {
@@ -48,13 +37,21 @@
     width: 100%;
     height: 100%;
     padding: 0;
-    margin-top: 20px;
     margin-bottom: 20px;
-    margin-right: 10px;
+    margin-top: 20px;
+
+    background-color: var(--background-pop);
+    color: var(--primary-muted-color);
 
     text-overflow: ellipsis;
-    
+
     border: none;
+}
+
+.Spinner {
+    width: 50px;
+    height: 50px;
+    float: right;
 }
 
 @keyframes floatIn {
@@ -62,6 +59,7 @@
         transform: translateY(-50px);
         opacity: 0%;
     }
+
     100% {
         transform: translate(0px);
     }
@@ -71,6 +69,7 @@
     0% {
         transform: translateY(-50px);
     }
+
     100% {
         transform: translate(0px);
     }

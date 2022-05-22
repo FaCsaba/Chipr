@@ -49,7 +49,7 @@ export default function RegisterPage() {
                     <InputWithLabel label='Repeat Password' type='password' ref={secondPasswordRef} id='repeatpassword' />
 
                     <Button.Primary type='submit' value='Register'/>
-                    <Button.Secondary type='submit' value='Login' callback={()=>goTo('/login')}  />
+                    <Button.Secondary type='submit' value='Login' onClick={()=>goTo('/login')}  />
                 </form>
             </div>
             <div hidden={!isLoading}>

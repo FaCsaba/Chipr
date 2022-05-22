@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react';
 import { auth, db } from '../firebaseSetup';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User } from 'firebase/auth';
-import { doc, getDoc, setDoc, Timestamp, collection } from 'firebase/firestore';
+import { doc, getDoc, setDoc, Timestamp, collection, updateDoc } from 'firebase/firestore';
 import { ChirpUser, userConverter, ChirpItem, useChirps } from './ChirpProvider';
 
 interface CurrentUserI {
@@ -15,10 +15,13 @@ interface AuthContextI {
     login?: (email: string, password: string, successCallback: (user: User) => void, failCallback: (reason: any) => void) => void
     logout?: () => void
     register?: (email: string, password: string, successCallback: (user: User) => string, failCallback: (reason: any) => void) => void,
-    sendChirp?: (chirpMessage: string) => void 
+    sendChirp?: (textcontent: string, imgcontent: string[]) => void
+    sendBlurb: (blurb: string) => void
+    sendUsername: (username: string) => void
+    sendProfilePicture: (profilePicture: string) => void
 }
 
-const AuthContext = React.createContext<AuthContextI>({isLoadingCurrentUser: true})
+const AuthContext = React.createContext<AuthContextI>({isLoadingCurrentUser: true, sendBlurb: ()=>{}, sendUsername: ()=>{}, sendProfilePicture: ()=>{}})
 
 export function useAuth() {
     return useContext(AuthContext)
@@ -38,7 +41,7 @@ export default function AuthProvider({children}: {children: JSX.Element}) {
             .then((user)=> {
                 console.log(user)
                 const chirpHandle = successCallback(user.user)
-                return setDoc(doc(db, 'users', user.user.uid), {amountOfChirps: 0, chirpHandle, chirps: [], pic: user.user.photoURL || 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg', username: chirpHandle})
+                return setDoc(doc(db, 'users', user.user.uid), {amountOfChirps: 0, chirpHandle, chirps: [], pic: user.user.photoURL || 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg', username: chirpHandle, createdAt: Timestamp.now(), blurb: ''})
             }, (reason)=>{
                 console.log(reason.code)
                 failCallback(cleanErrorReason(reason.code))
@@ -65,17 +68,35 @@ export default function AuthProvider({children}: {children: JSX.Element}) {
         signOut(auth)
     }
 
-    function sendChirp(chirpMessage: string) {
+    function sendChirp(textcontent: string, imgcontent: string[]) {
         if (currentUser?.chirprInfo && currentUser.auth?.uid) {
-            const chirp = new ChirpItem('', currentUser.chirprInfo.id, chirpMessage, [], Timestamp.now()) 
+            const chirp = new ChirpItem('', currentUser.chirprInfo.id, textcontent, [], Timestamp.now()) 
             console.log(chirp)
-            setDoc(doc(collection(db, 'chirps')), {imgcontent: [], textcontent: chirpMessage, timestamp: Timestamp.now(), user: currentUser.auth.uid})
+            setDoc(doc(collection(db, 'chirps')), {imgcontent, textcontent, timestamp: Timestamp.now(), user: currentUser.auth.uid})
                 .then(()=>{
                     addChirp(chirp)
                 })
                 .catch((reason)=>{
                     console.log(JSON.stringify(reason))
                 })
+        }
+    }
+
+    function sendBlurb(blurb: string) {
+        if (currentUser?.chirprInfo && currentUser.auth?.uid) {
+            updateDoc(doc(collection(db, 'users'), currentUser.auth.uid), {blurb: blurb})
+        }
+    }
+
+    function sendUsername(username: string) {
+        if (currentUser?.chirprInfo && currentUser.auth?.uid) {
+            updateDoc(doc(collection(db, 'users'), currentUser.auth.uid), {username: username})
+        }
+    }
+
+    function sendProfilePicture(profilePicture: string) {
+        if (currentUser?.chirprInfo && currentUser.auth?.uid) {
+            updateDoc(doc(collection(db, 'users'), currentUser.auth.uid), {pic: profilePicture})
         }
     }
 
@@ -98,7 +119,10 @@ export default function AuthProvider({children}: {children: JSX.Element}) {
         login,
         logout,
         isLoadingCurrentUser: isLoading,
-        sendChirp
+        sendChirp,
+        sendBlurb,
+        sendUsername,
+        sendProfilePicture
     }
 
     return <AuthContext.Provider value={value}>

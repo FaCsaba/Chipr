@@ -7,7 +7,7 @@ Light mode colors:
 - accent-color: #7b39ed
 
 Dark mode colors:
--  background-color: #333333
+- background-color: #333333
 - accent-color: #7b39ed
 ---
 ### Database

@@ -2,12 +2,10 @@ import React from 'react';
 import {CgSpinnerAlt} from 'react-icons/cg';
 import Classes from './Spinner.module.css';
 
-function Spinner() {
-  return (
-      <div className={Classes.SpinnerContainer}>
-          <CgSpinnerAlt className={Classes.Spinner}/>
-      </div>
-  )
+function Spinner({className}: {className?: string}) {
+    return (
+        <CgSpinnerAlt className={className+' '+Classes.Spinner}/>
+    )
 }
 
 export default Spinner

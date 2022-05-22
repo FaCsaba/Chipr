@@ -1,0 +1,51 @@
+.ProfileOverview {
+    width: 100%;
+}
+
+.ProfilePicture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.Username {
+    font-weight: 700;
+    font-size: 44px;
+    max-width: 500px;
+    color: var(--text-color);
+}
+
+.Handle {
+    font-weight: 700;
+    font-size: 30px;
+    max-width: 500px;
+    margin-top: 10px;
+    color: var(--text-color-muted);
+}
+
+.Blurb {
+    display: inline-block;
+    word-break: break-word;
+    color: var(--text-color);
+}
+
+.Wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    background-color: var(--background-pop);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+@media (max-width : 640px) {
+    .Wrapper {
+        flex-direction: column;
+    }
+}
+
+.ChangeProfileButton {
+    width: fit-content;
+    margin-left: auto;
+}
