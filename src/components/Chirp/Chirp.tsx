@@ -1,6 +1,6 @@
 import { ChirpItem, ChirpUser } from '../../store/ChirpProvider';
 import Classes from './Chirp.module.css'
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import ChirpContext from '../../store/ChirpProvider';
 import { Link } from 'react-router-dom';
 import PictureHolder from '../PrictureHolder/PictureHolder';
@@ -16,16 +16,41 @@ interface ChirpProps {
     isDeletable: boolean
 }
 
+function disableScroll() {
+    // Get the current page scroll position
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollLeft = document.documentElement.scrollLeft;
+
+        // if any scroll is attempted,
+        // set this to the previous value
+    window.onscroll = function() {
+        window.scrollTo(scrollLeft, scrollTop);
+    };
+}
+
+function enableScroll() {
+    window.onscroll = function() {};
+}
+
 export default function Chirp({chirp, animationDelay, isDeletable}: ChirpProps) {
     const {currentUser} = useAuth()
     const { users, deleteChirp } = useContext(ChirpContext)
     const [isPopupHidden, setIsPopupHidden] = useState<boolean>(true)
     const [isDeleting, setIsDeleting] = useState<boolean>(false)
+    const [currentViewedImage, setCurrentViewedImage] = useState<number | null>(null); 
+
+    const imageRef = useRef<HTMLImageElement>(null)
 
     const user = users?.find((user: ChirpUser | undefined) => {return user?.id === chirp.userId})
 
     function togglePopup() {
         setIsPopupHidden(!isPopupHidden);
+    }
+    
+
+    function handleImageClick(target: number) {
+        setCurrentViewedImage(target)
+        disableScroll()
     }
 
     return (<>
@@ -54,7 +79,7 @@ export default function Chirp({chirp, animationDelay, isDeletable}: ChirpProps) 
                     }
 
                     <p className={Classes.Text}>{chirp.textcontent}</p>
-                    <PictureHolder.Basic images={chirp.imgcontent}/>
+                    <PictureHolder.Basic images={chirp.imgcontent} click={(t)=>handleImageClick(t)}/>
                 </section>
                 
             </div>
@@ -68,9 +93,20 @@ export default function Chirp({chirp, animationDelay, isDeletable}: ChirpProps) 
                         <Button.Primary className={Classes.CancelButton} value='Cancel' onClick={()=>setIsDeleting(false)}/>
                     </div>
                     </div>
-                </Modal>
-            }
-        </>
-        }
+                </Modal>}
+            {currentViewedImage !== null && 
+            <>
+                {currentViewedImage !== 0 &&
+                    <Button.Secondary className={Classes.NavigateLeft} value='<' onClick={()=>{setCurrentViewedImage(o=>o!-1)}}/>}
+
+                <div className={Classes.ImageBackDrop1} onClick={()=>{setCurrentViewedImage(null);enableScroll()}}/>
+                <img src={chirp.imgcontent[currentViewedImage]} alt='' className={Classes.ImageBackDrop2} onClick={()=>{setCurrentViewedImage(null);enableScroll()}}/>
+                <img src={chirp.imgcontent[currentViewedImage]} alt='' className={Classes.Image} ref={imageRef}/>
+                <Button.Secondary className={Classes.ExitButton} value='X' onClick={()=>{setCurrentViewedImage(null);enableScroll()}}/>
+
+                {currentViewedImage !== chirp.imgcontent.length - 1 &&
+                    <Button.Secondary className={Classes.NavigateRight} value='>' onClick={()=>{setCurrentViewedImage(o=> o!+1)}}/>}
+            </>}
+        </>}
     </>)
 }

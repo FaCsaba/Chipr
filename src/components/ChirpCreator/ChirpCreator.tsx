@@ -39,6 +39,11 @@ export default function ChirpCreator() {
         if (input || imgUrls.size > 0) {
             sendChirp!(input || '', mapToArray(imgUrls))
         }
+        setImageMap(new Map())
+        setImageUrls(new Map())
+        setImgArray([])
+        inputRef.current!.value! = ''
+        fileRef.current!.files = null
     }
 
     function handlePictureUploadClick() {
