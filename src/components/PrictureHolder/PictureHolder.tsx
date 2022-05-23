@@ -20,7 +20,7 @@ function StringArray({images, click}: {images: string[], click?: (targetImage: n
             }
             {images.length === 3 ? <>
                 <img src={images[0]} className={Classes.Image} onClick={()=>click? click(0):''}  alt=''/>
-                <div style={{display: "flex", gap: "4px"}}>
+                <div style={{display: "flex", gap: "1%"}}>
                     <img src={images[1]} className={Classes.Image} onClick={()=>click? click(1):''}  alt=''/>
                     <img src={images[2]} className={Classes.Image} onClick={()=>click? click(2):''}  alt=''/>
                 </div>
