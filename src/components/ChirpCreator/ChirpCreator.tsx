@@ -13,7 +13,6 @@ const chirpCreatorUploadImages = createContext<{images: ( (flexBasis: string)=>J
 function mapToArray<K=any, V=any>(map: Map<K, V>) {
     let arr: V[] = []
     map.forEach(i => {arr.push(i)})
-    console.log(arr)
     return arr
 }
 
@@ -35,7 +34,6 @@ export default function ChirpCreator() {
 
     function handleSubmit() {
         const input = inputRef.current?.value
-        console.log(input)
         if (input || imgUrls.size > 0) {
             sendChirp!(input || '', mapToArray(imgUrls))
         }
@@ -51,8 +49,6 @@ export default function ChirpCreator() {
     }
 
     useEffect(()=>{
-        console.log(imgMap)
-        console.log(imgUrls) 
     }, [imgMap, imgUrls])
 
     function handleFileInput() {
@@ -63,8 +59,6 @@ export default function ChirpCreator() {
         const l = clamp(fileRef.current.files.length, 1, 4)
         for (let i = 0; i < l; i++) {
             if (imgMap.size < 5) {
-            console.log("oninput works")
-
 
             const file = fileRef.current.files[i]
             

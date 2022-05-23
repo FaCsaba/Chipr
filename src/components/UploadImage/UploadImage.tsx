@@ -36,11 +36,9 @@ function UploadImage(
                         setIsInCloud(true)
                     })
                     .catch(r => {
-                        console.log(r)
                     })
                 })
                 .catch(r => {
-                    console.log(r)
                     setIsLoading(false)
                 })
         }
@@ -48,10 +46,9 @@ function UploadImage(
 
     useEffect(()=>{
         if (isCanceled && cloudRef && isInCloud) {
-            console.log('Deleted')
             deleteObject(cloudRef)
                 .then(()=>setIsInCloud(false))
-                .catch(reason=>{console.log(reason)})
+                .catch(reason=>{console.error(reason)})
             if (onCancel) {onCancel(id || '')}
         }
 

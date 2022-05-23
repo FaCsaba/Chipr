@@ -93,7 +93,6 @@ export function ChirpProvider({ children }: {children: JSX.Element} ) {
         const unsubFromChirps = onSnapshot(
             query(collection(db, "chirps")
             .withConverter(chirpConverter), orderBy('timestamp', 'desc')), (value) => {
-                console.log(value)
                 const _chirps = value.docs.map((u)=>{return u.data()})
                 setChirps(_chirps)
             })
@@ -129,8 +128,7 @@ export function ChirpProvider({ children }: {children: JSX.Element} ) {
 
     function deleteChirp(chirpId: string) {
         deleteDoc(doc(collection(db, 'chirps'), chirpId))
-            .then(()=>console.log('deleted chirp'))
-            .catch((reason)=> console.log(reason))
+            .catch((reason)=> console.error(reason))
     }
 
 

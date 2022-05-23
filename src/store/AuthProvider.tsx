@@ -39,26 +39,23 @@ export default function AuthProvider({children}: {children: JSX.Element}) {
     function register(email: string, password: string, successCallback: (user: User) => string, failCallback: (reason: any) => void) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((user)=> {
-                console.log(user)
                 const chirpHandle = successCallback(user.user)
                 return setDoc(doc(db, 'users', user.user.uid), {amountOfChirps: 0, chirpHandle, chirps: [], pic: user.user.photoURL || 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg', username: chirpHandle, createdAt: Timestamp.now(), blurb: ''})
             }, (reason)=>{
-                console.log(reason.code)
                 failCallback(cleanErrorReason(reason.code))
             })
             .catch((reason)=>{
-                console.log(JSON.stringify(reason))
+                console.error(reason)
             })
     }
 
     function login(email: string, password: string, successCallback: (user: User) => void, failCallback: (reason: any) => void) {
         signInWithEmailAndPassword(auth, email, password)
             .then((user)=>{
-                console.log(user)
                 successCallback(user.user)
             })
             .catch((reason)=>{
-                console.log(reason.code)
+                console.error(reason.code)
                 failCallback(cleanErrorReason(reason.code))
         
             })
@@ -71,13 +68,12 @@ export default function AuthProvider({children}: {children: JSX.Element}) {
     function sendChirp(textcontent: string, imgcontent: string[]) {
         if (currentUser?.chirprInfo && currentUser.auth?.uid) {
             const chirp = new ChirpItem('', currentUser.chirprInfo.id, textcontent, [], Timestamp.now()) 
-            console.log(chirp)
             setDoc(doc(collection(db, 'chirps')), {imgcontent, textcontent, timestamp: Timestamp.now(), user: currentUser.auth.uid})
                 .then(()=>{
                     addChirp(chirp)
                 })
                 .catch((reason)=>{
-                    console.log(JSON.stringify(reason))
+                    console.error(reason)
                 })
         }
     }
