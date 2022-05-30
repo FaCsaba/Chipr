@@ -59,7 +59,9 @@ export default function Chirp({chirp, animationDelay, isDeletable}: ChirpProps) 
                 <div className={Classes.Backdrop} onClick={()=>{setIsPopupHidden(true)}}/>
             }       
             <div className={Classes.Card} style={{animationDelay: animationDelay}}>
-                    <img className={Classes.ProfilePicture} src={user.pic} alt='' />
+                    <Link className={Classes.UserLink} to={'/user/@'+user.chirpHandle}>
+                        <img className={Classes.ProfilePicture} src={user.pic} alt='' />
+                    </Link>
                 <section className={Classes.Substance}>
                     <div className={Classes.UserInfoBar}>
                         <Link className={Classes.UserLink} to={'/user/@'+user.chirpHandle}>
