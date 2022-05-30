@@ -43,7 +43,7 @@ export default function RegisterPage() {
             <div hidden={isLoading} >
                 {error && <p className={Classes.Error} >{error}</p>}
                 <form className={Classes.Form} onSubmit={handleSubmit}>
-                    <InputWithLabel label='Chirp Handle' type='' id='chirp' ref={chirpHandleRef}/>
+                    <InputWithLabel label='Chirp Handle' type='' id='chirp' ref={chirpHandleRef} />
                     <InputWithLabel label='Email' type='email' ref={emailRef} id='email' />
                     <InputWithLabel label='Password' type='password' ref={passwordRef} id='password' />
                     <InputWithLabel label='Repeat Password' type='password' ref={secondPasswordRef} id='repeatpassword' />

@@ -22,9 +22,9 @@ export default function ProfilePage() {
     useEffect(()=>{
         function getChirpHandleFromPath() {
             const chirpHandlePart = location.pathname.split('/')[2]
-            if (chirpHandlePart[0] === '@') return decodeURIComponent(chirpHandlePart.slice(1))
+            if (chirpHandlePart[0] === '@') return chirpHandlePart.slice(1)
             nav(`/user/@${chirpHandlePart}`)
-            return decodeURIComponent(chirpHandlePart)
+            return chirpHandlePart
         }
 
         setChirpHandle(getChirpHandleFromPath())

@@ -15,9 +15,9 @@ function ProfileOverview({user}: {user: ChirpUser}) {
                 <img className={Classes.ProfilePicture} src={user.pic} alt='' />
             </div>
             <div style={{display: "flex", flexDirection: "column", gap: "20px", width: '100%'}}>
-                <div style={{display: "flex", width: '100%', flexWrap: 'wrap'}}>
+                <div style={{display: "flex", width: '100%', flexWrap: 'wrap', wordBreak: "break-word"}}>
                     <p className={Classes.Username}>{user.username}</p>
-                    <p className={Classes.Handle}>{"@"+user.chirpHandle}</p>
+                    <p className={Classes.Handle}>{"@"+decodeURIComponent(user.chirpHandle)}</p>
                     {currentUser?.chirprInfo?.id === user.id &&
                         <Button.Secondary onClick={()=>setIsChangingProfile(true)} className={Classes.ChangeProfileButton} value='Change profile'/>
                     }

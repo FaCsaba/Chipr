@@ -64,7 +64,7 @@ export default function Chirp({chirp, animationDelay, isDeletable}: ChirpProps) 
                     <div className={Classes.UserInfoBar}>
                         <Link className={Classes.UserLink} to={'/user/@'+user.chirpHandle}>
                             <p className={Classes.Username}>{user.username}</p>
-                            <p className={Classes.Handle}>{'@'+user.chirpHandle}</p>
+                            <p className={Classes.Handle}>{'@'+decodeURIComponent(user.chirpHandle)}</p>
                         </Link> 
                         {currentUser?.chirprInfo?.id === user.id && isDeletable &&
                             <BsThreeDotsVertical className={Classes.ExtraDots} id="dots" onClick={()=>togglePopup()} />

@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import { auth, db } from '../firebaseSetup';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User } from 'firebase/auth';
 import { doc, getDoc, setDoc, Timestamp, collection, updateDoc } from 'firebase/firestore';
-import { ChirpUser, userConverter, ChirpItem, useChirps } from './ChirpProvider';
+import { ChirpUser, userConverter } from './ChirpProvider';
 
 interface CurrentUserI {
     auth: User|null,  
@@ -34,13 +34,13 @@ function cleanErrorReason(reason: string) {
 export default function AuthProvider({children}: {children: JSX.Element}) {
     const [currentUser, setCurrentUser] = useState<CurrentUserI|undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const {addChirp} = useChirps()
+
 
     function register(email: string, password: string, successCallback: (user: User) => string, failCallback: (reason: any) => void) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((user)=> {
                 const chirpHandle = successCallback(user.user)
-                return setDoc(doc(db, 'users', user.user.uid), {amountOfChirps: 0, chirpHandle, chirps: [], pic: user.user.photoURL || 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg', username: chirpHandle, createdAt: Timestamp.now(), blurb: ''})
+                return setDoc(doc(db, 'users', user.user.uid), {amountOfChirps: 0, chirpHandle: encodeURIComponent(chirpHandle), chirps: [], pic: user.user.photoURL || 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg', username: chirpHandle, createdAt: Timestamp.now(), blurb: ''})
             }, (reason)=>{
                 failCallback(cleanErrorReason(reason.code))
             })
@@ -67,11 +67,7 @@ export default function AuthProvider({children}: {children: JSX.Element}) {
 
     function sendChirp(textcontent: string, imgcontent: string[]) {
         if (currentUser?.chirprInfo && currentUser.auth?.uid) {
-            const chirp = new ChirpItem('', currentUser.chirprInfo.id, textcontent, [], Timestamp.now()) 
             setDoc(doc(collection(db, 'chirps')), {imgcontent, textcontent, timestamp: Timestamp.now(), user: currentUser.auth.uid})
-                .then(()=>{
-                    addChirp(chirp)
-                })
                 .catch((reason)=>{
                     console.error(reason)
                 })

@@ -25,14 +25,13 @@ export class ChirpItem {
 export interface ChirpContextI {
     chirps: ChirpItem[] | undefined
     users: ChirpUser[] | undefined
-    addChirp: (chirp: ChirpItem) => void
     getUserByChirpHandle?: (chirpHandle: string) => Promise<ChirpUser|undefined>
     deleteChirp: (chirpId: string) => void
 }
 
 export type Users = {[key: string]: ChirpUser}
 
-const ChirpContext = createContext<ChirpContextI>({chirps: [], users: [], addChirp: ()=>{}, deleteChirp: ()=>{}})
+const ChirpContext = createContext<ChirpContextI>({chirps: [], users: [], deleteChirp: ()=>{}})
 
 export function useChirps() {
     return useContext(ChirpContext)
@@ -75,15 +74,6 @@ export function ChirpProvider({ children }: {children: JSX.Element} ) {
     const [chirps, setChirps] = useState<ChirpItem[] | undefined>([]);
     const [users, setUsers] = useState<ChirpUser[] | undefined>([]);
 
-    function addChirp(chirp: ChirpItem) {
-        if (chirps) {
-
-            setChirps([chirp, ...chirps])
-        } else {
-            setChirps([chirp])
-        }
-    }
-
     const addUser = (user: ChirpUser) => {
         if (users) return setUsers([user, ...users])
         setUsers([user])
@@ -105,7 +95,6 @@ export function ChirpProvider({ children }: {children: JSX.Element} ) {
         
         return () => {unsubFromChirps(); unsubFromUsers()}
     }, [])
-
     
 
     async function getUserByChirpHandle(chirpHandle: string) {
@@ -135,7 +124,6 @@ export function ChirpProvider({ children }: {children: JSX.Element} ) {
     const value: ChirpContextI = {
         chirps,
         users,
-        addChirp,
         getUserByChirpHandle: getUserByChirpHandle,
         deleteChirp
     }
